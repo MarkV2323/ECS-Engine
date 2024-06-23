@@ -20,6 +20,7 @@ set (HEADERS
     src/ScoreComp.h
     src/ShapeComp.h
     src/TransformComp.h
+    src/Entity.h
 )
 
 # Set Sources
