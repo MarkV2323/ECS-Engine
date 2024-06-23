@@ -21,6 +21,7 @@ set (HEADERS
     src/ShapeComp.h
     src/TransformComp.h
     src/Entity.h
+    src/EntityManager.h
 )
 
 # Set Sources

@@ -9,6 +9,9 @@
 #include "ShapeComp.h"
 #include "TransformComp.h"
 
+// Entity classes
+#include "EntityManager.h"
+
 // For ease of use, use both std & our custom ecse namespaces
 using namespace std;
 using namespace ecse;
@@ -19,5 +22,7 @@ using namespace ecse;
  */
 int main(int argc, char const *argv[]) {
   cout << "Hello World!\n";
+  EntityManager eMan{};
+  eMan.addEntity("player");
   return 0;
 }
