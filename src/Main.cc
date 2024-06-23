@@ -1,6 +1,5 @@
-#include <iostream>
-
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 // All Components
 #include "CollisionComp.h"
@@ -15,11 +14,10 @@ using namespace std;
 using namespace ecse;
 
 /**
- * This Main program is used simply as a quick test bench for changes 
+ * This Main program is used simply as a quick test bench for changes
  * in the ECS-Engine library.
  */
-int main(int argc, char const *argv[])
-{
-    cout << "Hello World!\n";
-    return 0;
+int main(int argc, char const *argv[]) {
+  cout << "Hello World!\n";
+  return 0;
 }
