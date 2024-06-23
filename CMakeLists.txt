@@ -15,6 +15,11 @@ FetchContent_MakeAvailable(SFML)
 # Set Headers
 set (HEADERS
     src/CollisionComp.h
+    src/InputComp.h
+    src/LifespanComp.h
+    src/ScoreComp.h
+    src/ShapeComp.h
+    src/TransformComp.h
 )
 
 # Set Sources
