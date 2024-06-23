@@ -22,6 +22,7 @@ set (HEADERS
     src/TransformComp.h
     src/Entity.h
     src/EntityManager.h
+    src/GameVector.h
 )
 
 # Set Sources
