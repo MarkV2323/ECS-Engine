@@ -14,15 +14,15 @@ FetchContent_MakeAvailable(SFML)
 
 # Set Headers
 set (HEADERS
-    src/CollisionComp.h
-    src/InputComp.h
-    src/LifespanComp.h
-    src/ScoreComp.h
-    src/ShapeComp.h
-    src/TransformComp.h
-    src/Entity.h
-    src/EntityManager.h
-    src/GameVector.h
+    src/EcsHeaders/CollisionComp.h
+    src/EcsHeaders/InputComp.h
+    src/EcsHeaders/LifespanComp.h
+    src/EcsHeaders/ScoreComp.h
+    src/EcsHeaders/ShapeComp.h
+    src/EcsHeaders/TransformComp.h
+    src/EcsHeaders/Entity.h
+    src/EcsHeaders/EntityManager.h
+    src/EcsHeaders/GameVector.h
 )
 
 # Set Sources
