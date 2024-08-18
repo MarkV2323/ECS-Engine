@@ -19,6 +19,7 @@ set (HEADERS
     src/EcsHeaders/LifespanComp.h
     src/EcsHeaders/ScoreComp.h
     src/EcsHeaders/ShapeComp.h
+    src/EcsHeaders/RectShapeComp.h
     src/EcsHeaders/TransformComp.h
     src/EcsHeaders/Entity.h
     src/EcsHeaders/EntityManager.h
