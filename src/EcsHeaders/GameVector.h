@@ -19,13 +19,14 @@ class GameVector {
     _angle = atan(_comp.y / _comp.x) * 180 / 3.14159265;
   }
 
-  GameVector(){};
+  GameVector() {};
 
  public:
   sf::Vector2f _comp{0.0f, 0.0f};
   float _mag{0.0f};
   float _angle{0.0f};
 
+  // NOTE: sfml Vector2f & the like are POINTS, not in component form.
   // Three ways to create a vector object:
   // 1: From two points, you can calculate the component form, then calculate
   //    the angle & magnitude.
@@ -39,30 +40,30 @@ class GameVector {
     calculateAngle();
   }
 
-  GameVector(sf::Vector2f& c) {
+  GameVector(float v1, float v2) : _comp(v1, v2) {
     calculateMag();
     calculateAngle();
   }
 
-  GameVector(float a, float m) : _angle{a}, _mag{m} {}
+  // GameVector(float a, float m) : _angle{a}, _mag{m} {}
 
   // Return resulant vector sum.
   GameVector add(GameVector& v) {
     // u + v = <u1 + v1, u2 + v2>
-    return GameVector(
-        sf::Vector2f((_comp.x + v._comp.x), (_comp.y + v._comp.y)));
+    return GameVector(_comp.x + v._comp.x, _comp.y + v._comp.y);
   }
 
   // Return difference vector.
   GameVector diff(GameVector& v) {
     // u + (-v) = <u1 - v1, u2 - v2>
-    return add(v.neg());
+    GameVector gv = v.neg();
+    return add(gv);
   }
 
   // Return scalar multiple vector.
   GameVector scale(float c) {
     // cu = <c * u1, c * u2>
-    return GameVector(sf::Vector2f((c * _comp.x), (c * _comp.y)));
+    return GameVector(c * _comp.x, c * _comp.y);
   }
 
   // Return negative vector.
@@ -83,6 +84,6 @@ class GameVector {
            "> " + std::to_string(_angle) + "o |" + std::to_string(_mag) + "|";
   }
 
-  ~GameVector(){};
+  ~GameVector() {};
 };
-}
+}  // namespace ecse
