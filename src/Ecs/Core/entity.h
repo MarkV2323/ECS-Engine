@@ -3,13 +3,13 @@
 #include <memory>
 #include <string>
 
-#include "CollisionComp.h"
-#include "InputComp.h"
-#include "LifespanComp.h"
-#include "RectShapeComp.h"
-#include "ScoreComp.h"
-#include "ShapeComp.h"
-#include "TransformComp.h"
+#include "Component/circle_shape.h"
+#include "Component/collision.h"
+#include "Component/input.h"
+#include "Component/lifespan.h"
+#include "Component/rectangle_shape.h"
+#include "Component/score.h"
+#include "Component/transform.h"
 
 namespace ecse {
 class Entity {

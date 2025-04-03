@@ -2,15 +2,16 @@
 #include <iostream>
 
 // All Components
-#include "EcsHeaders/CollisionComp.h"
-#include "EcsHeaders/InputComp.h"
-#include "EcsHeaders/LifespanComp.h"
-#include "EcsHeaders/ScoreComp.h"
-#include "EcsHeaders/ShapeComp.h"
-#include "EcsHeaders/TransformComp.h"
+#include "Component/circle_shape.h"
+#include "Component/collision.h"
+#include "Component/input.h"
+#include "Component/lifespan.h"
+#include "Component/rectangle_shape.h"
+#include "Component/score.h"
+#include "Component/transform.h"
 
 // Entity classes
-#include "EcsHeaders/EntityManager.h"
+#include "Core/entity_manager.h"
 
 // For ease of use, use both std & our custom ecse namespaces
 using namespace std;

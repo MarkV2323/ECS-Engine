@@ -12,28 +12,34 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-# Set Headers
-set (HEADERS
-    src/EcsHeaders/CollisionComp.h
-    src/EcsHeaders/InputComp.h
-    src/EcsHeaders/LifespanComp.h
-    src/EcsHeaders/ScoreComp.h
-    src/EcsHeaders/ShapeComp.h
-    src/EcsHeaders/RectShapeComp.h
-    src/EcsHeaders/TransformComp.h
-    src/EcsHeaders/Entity.h
-    src/EcsHeaders/EntityManager.h
-    src/EcsHeaders/GameVector.h
+# Core
+set (CORE_FILES
+    src/Ecs/Core/game_vector.h
+    src/Ecs/Core/entity.h
+    src/Ecs/Core/entity_manager.h
+)
+
+# Components
+set (COMPONENT_FILES
+    src/Ecs/Component/circle_shape.h
+    src/Ecs/Component/rectangle_shape.h
+    src/Ecs/Component/input.h
+    src/Ecs/Component/lifespan.h
+    src/Ecs/Component/score.h
+    src/Ecs/Component/transform.h
+    src/Ecs/Component/collision.h
 )
 
 # Set Sources
 set(SOURCES
-    ${HEADERS}
-    src/Main.cc
+    ${CORE_FILES}
+    ${COMPONENT_FILES}
+    src/main.cc
 )
 
 # Setup target & link
 add_executable(ECS_ENGINE ${SOURCES})
+target_include_directories(ECS_ENGINE PRIVATE ${PROJECT_SOURCE_DIR}/src/Ecs)
 target_link_libraries(ECS_ENGINE PRIVATE sfml-graphics sfml-system)
 target_compile_features(ECS_ENGINE PRIVATE cxx_std_17)
 
