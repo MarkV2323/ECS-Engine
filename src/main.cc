@@ -70,8 +70,8 @@ class Game {
     // player->cShape->shape.setRotation(45);
 
     // Setup player with a rectangle shape
-    player->cRectShape = std::make_shared<RectShapeComp>(
-        PLAYER_SIZE_X, PLAYER_SIZE_Y, 4, sf::Color::White, sf::Color::Green, 2);
+    player->cRectShape = std::make_shared<RectangleShape>(
+        PLAYER_SIZE_X, PLAYER_SIZE_Y, sf::Color::White, sf::Color::Green, 2);
     player->cRectShape->shape.setPosition(
         sf::Vector2f(PLAYER_START_X, PLAYER_START_Y));
     player->cRectShape->shape.setRotation(0);

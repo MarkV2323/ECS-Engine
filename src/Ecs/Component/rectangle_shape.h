@@ -3,21 +3,21 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 namespace ecse {
-class RectShapeComp {
+class RectangleShape {
  private:
-  RectShapeComp() {}
+  RectangleShape() {}
 
  public:
   sf::RectangleShape shape{};
 
-  RectShapeComp(float size_x, float size_y, int points, const sf::Color& fill,
-                const sf::Color& outline, float thickness)
+  RectangleShape(float size_x, float size_y, sf::Color fill_color,
+                 sf::Color outline_color, float outline_thickness)
       : shape(sf::Vector2f(size_x, size_y)) {
-    shape.setFillColor(fill);
-    shape.setOutlineColor(outline);
-    shape.setOutlineThickness(thickness);
+    shape.setFillColor(fill_color);
+    shape.setOutlineColor(outline_color);
+    shape.setOutlineThickness(outline_thickness);
     shape.setPosition(sf::Vector2f(0, 0));
   }
-  ~RectShapeComp() {}
+  ~RectangleShape() {}
 };
 }  // namespace ecse

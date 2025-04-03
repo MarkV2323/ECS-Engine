@@ -30,8 +30,8 @@ class Entity {
   std::shared_ptr<InputComp> cInput;
   std::shared_ptr<LifespanComp> cLifespan;
   std::shared_ptr<ScoreComp> cScore;
-  std::shared_ptr<ShapeComp> cShape;
-  std::shared_ptr<RectShapeComp> cRectShape;
+  std::shared_ptr<CircleShape> cShape;
+  std::shared_ptr<RectangleShape> cRectShape;
   std::shared_ptr<TransformComp> cTransform;
 
   ~Entity() {};
