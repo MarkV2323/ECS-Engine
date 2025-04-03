@@ -15,6 +15,9 @@ class EntityManager {
   std::map<std::string, std::vector<std::shared_ptr<Entity>>> entityMap;
   std::vector<std::shared_ptr<Entity>> toAddEntities;
 
+  // Keep track of next eId to give out
+  size_t current_eId{0};
+
   // Debug menu is seperate from game entities
   sf::Text debugMenu;
 
@@ -22,9 +25,10 @@ class EntityManager {
     entities.clear();
     entityMap.clear();
     toAddEntities.clear();
+    current_eId = 0;
     debugMenu.setString("");
-    debugMenu.setCharacterSize(24);
-    debugMenu.setColor(sf::Color::Black);
+    debugMenu.setCharacterSize(18);
+    debugMenu.setFillColor(sf::Color::Red);
     debugMenu.setPosition(sf::Vector2f(20.0f, 20.0f));
   }
 
@@ -74,23 +78,25 @@ class EntityManager {
   }
 
   std::shared_ptr<Entity> addEntity(std::string eTag) {
-    toAddEntities.push_back(std::shared_ptr<Entity>(new Entity(eTag)));
+    toAddEntities.push_back(
+        std::shared_ptr<Entity>(new Entity(eTag, current_eId)));
+    current_eId += 1;
     return toAddEntities.back();
   }
 
   const std::vector<std::shared_ptr<Entity>>& getEntities() { return entities; }
 
-  const std::vector<std::shared_ptr<Entity>>& getEntities(std::string& s) {
+  const std::vector<std::shared_ptr<Entity>>& getEntities(std::string s) {
     return entityMap[s];
   }
 
-  void initDebugMenu(sf::Font f, int fontSize, sf::Color c) {
+  void initDebugMenu(sf::Font& f, int fontSize, sf::Color c) {
     debugMenu.setFont(f);
     debugMenu.setCharacterSize(fontSize);
-    debugMenu.setColor(c);
+    debugMenu.setFillColor(c);
   }
 
-  void updateDebugMenu(std::string& s) { debugMenu.setString(s); }
+  void updateDebugMenu(std::string s) { debugMenu.setString(s); }
 
   const sf::Text& getDebugMenu() { return debugMenu; }
 

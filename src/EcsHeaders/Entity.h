@@ -21,7 +21,7 @@ class Entity {
   Entity() {}
 
   // Player Entity Constructor
-  Entity(std::string eTag) : tag(eTag) {}
+  Entity(std::string eTag, size_t eId = 0) : tag(eTag), id(eId) {}
 
  public:
   friend class EntityManager;
