@@ -15,7 +15,7 @@ class TransformComp {
         speed(sf::Vector2f(0.0, 0.0)),
         scale(sf::Vector2f(0.0, 0.0)),
         angle(0.0) {}
-  TransformComp(sf::Vector2f& p, sf::Vector2f& sp, sf::Vector2f& sc, double a)
+  TransformComp(sf::Vector2f p, sf::Vector2f sp, sf::Vector2f sc, double a)
       : pos(p), speed(sp), scale(sc), angle(a) {}
   ~TransformComp() {}
 };
