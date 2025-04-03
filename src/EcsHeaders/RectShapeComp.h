@@ -10,13 +10,13 @@ class RectShapeComp {
  public:
   sf::RectangleShape shape{};
 
-  RectShapeComp(float x, float y, int points, const sf::Color& fill,
+  RectShapeComp(float size_x, float size_y, int points, const sf::Color& fill,
                 const sf::Color& outline, float thickness)
-      : shape(sf::Vector2f(x, y)) {
+      : shape(sf::Vector2f(size_x, size_y)) {
     shape.setFillColor(fill);
     shape.setOutlineColor(outline);
     shape.setOutlineThickness(thickness);
-    shape.setOrigin(sf::Vector2f(x, y));
+    shape.setPosition(sf::Vector2f(0, 0));
   }
   ~RectShapeComp() {}
 };
