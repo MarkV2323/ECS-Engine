@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "entity_manager.hpp"
+#include "system_draw.hpp"
 #include "utils.hpp"
 
 using namespace std;
@@ -22,17 +23,17 @@ int main() {
   RenderWindow window(VideoMode({WIN_WIDTH, WIN_HEIGHT}), "SFML works!");
   EntityMan eman = {};
 
-  Entity e;
-  e.setName("Mark");
-  e.setRec(buildRec(Color::Green, {20.f, 20.f}, {300.f, 300.f}));
-  eman.addEntity(e);
+  Entity e1;
+  e1.setName("Mark");
+  e1.setRec(buildRec(Color::Green, {20.f, 20.f}, {300.f, 300.f}));
+  eman.addEntity(e1);
 
-  //  Entity e2;
-  //  e.setName("Alan");
-  //  Vector2f p1{100.f, 200.f};
-  //  Vector2f p2{600.f, 600.f};
-  //  e.setLine(buildLine(p1, p2, Color::Yellow));
-  //  eman.addEntity(e);
+  Entity e2;
+  e2.setName("Alan");
+  Vector2f p1{100.f, 200.f};
+  Vector2f p2{600.f, 600.f};
+  e2.setLine(buildLine(p1, p2, Color::Yellow));
+  eman.addEntity(e2);
 
   //  fmt::print(fg(INFO_COLOR), "{}", "Line Segment: ");
   //  fmt::print(fg(VAL_COLOR), "{} to {}\n", printVector(p1), printVector(p2));
@@ -51,6 +52,6 @@ int main() {
     // physics(eman);
 
     // process drawing
-    // draw(window, eman);
+    draw(window, eman);
   }
 }
