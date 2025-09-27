@@ -12,8 +12,9 @@ find_package(fmt CONFIG REQUIRED)
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE HEADERS "src/*.hpp")
 
-add_executable(SFML_Example ${SOURCES} ${HEADERS})
+add_executable(Ecs ${SOURCES} ${HEADERS})
 
-target_link_libraries(SFML_Example PRIVATE SFML::Window SFML::Graphics SFML::Network SFML::Audio)
-target_link_libraries(SFML_Example PRIVATE fmt::fmt)
+target_include_directories(Ecs PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
+target_link_libraries(Ecs PRIVATE SFML::Window SFML::Graphics SFML::Network SFML::Audio)
+target_link_libraries(Ecs PRIVATE fmt::fmt)
