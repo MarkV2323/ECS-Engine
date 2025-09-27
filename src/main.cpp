@@ -11,6 +11,7 @@
 
 using namespace std;
 using namespace sf;
+using namespace ecs;
 
 void processWindowEvent(RenderWindow& win) {
   while (const optional event = win.pollEvent()) {
