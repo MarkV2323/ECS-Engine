@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "entity_manager.hpp"
+#include "system_cursorMovement.hpp"
 #include "system_draw.hpp"
 #include "utils.hpp"
 
@@ -26,6 +27,7 @@ int main() {
   Entity e1;
   e1.setName("Mark");
   e1.setRec(buildRec(Color::Green, {20.f, 20.f}, {300.f, 300.f}));
+  e1.setPlayer();
   eman.addEntity(e1);
 
   Entity e2;
@@ -48,7 +50,8 @@ int main() {
     // process any input
     processWindowEvent(window);
 
-    // process physics
+    // process systems
+    follow_cursor(window, eman);
     // physics(eman);
 
     // process drawing

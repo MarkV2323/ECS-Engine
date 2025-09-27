@@ -8,26 +8,49 @@
 namespace ecs {
 class Entity {
  private:
-  sf::Vector2f recBounds[4];
+  void updateRecData() {
+    if (!shapeRec) return;
+    auto gb = shapeRec->getGlobalBounds().position;
+    auto gbs = shapeRec->getGlobalBounds().size;
+    recBounds[0] = gb;
+    recBounds[1] = gb + sf::Vector2f(gbs.x, 0);
+    recBounds[2] = gb + sf::Vector2f(0, gbs.y);
+    recBounds[3] = gb + gbs;
+    recCenter = {gb.x + (gbs.x / 2), gb.y + (gbs.y / 2)};
+    recSize = gbs;
+  }
 
  public:
-  // Every entity has a name
   std::string name = "null";
-
-  // Entity may only have 1 of these.
   std::optional<sf::RectangleShape> shapeRec = std::nullopt;
   std::optional<sf::CircleShape> shapeCir = std::nullopt;
   std::optional<sf::VertexArray> shapeLine = std::nullopt;
   std::optional<sf::Vector2f> speed = std::nullopt;
+  std::optional<bool> player = std::nullopt;
+
+  // These are stored window "global" positions for the rectangle.
+  sf::Vector2f recCenter{0, 0};
+  sf::Vector2f recSize{0, 0};
+  sf::Vector2f recBounds[4];
+
+  // "Set" a position for a shape
+  void setPos(sf::Vector2f p) {
+    if (shapeRec) {
+      shapeRec->setPosition(p);
+      updateRecData();
+    }
+  }
 
   void setName(std::string s) { name = s; }
   void setSpeed(sf::Vector2f v) { speed = v; }
+  void setPlayer() { player = true; }
 
   void setRec(sf::RectangleShape s) {
     shapeRec = s;
     shapeCir = std::nullopt;
     shapeLine = std::nullopt;
     speed = {0.005f, 0.005f};
+    updateRecData();
   }
 
   void setCir(sf::CircleShape s) {
