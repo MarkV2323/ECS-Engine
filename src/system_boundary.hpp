@@ -80,10 +80,6 @@ inline Intersections operator|(Intersections a, Intersections b) {
 
 // Take line segement input and determine if intersection occurs
 bool TopLineIntersect(sf::Vector2f p1, sf::Vector2f p2) {
-  fmt::print(fg(VAL_COLOR), "{} to {}\n", printVector(p1),
-             printVector(p2));
-  fmt::print(fg(VAL_COLOR), "{} to {}\n", printVector(TOP_LEFT),
-             printVector(TOP_RIGHT));
   return IntersectLines(p1, p2, TOP_LEFT, TOP_RIGHT);
 }
 
@@ -108,22 +104,28 @@ Intersections CalcBoundIntersects(sf::Vector2f p1, sf::Vector2f p2) {
   if (RightLineIntersect(p1, p2)) intersecs = intersecs | Intersections::Right;
   if (LeftLineIntersect(p1, p2)) intersecs = intersecs | Intersections::Left;
 
-  fmt::print(fg(INFO_COLOR), "{}", "Found Intersection: ");
-  fmt::print(fg(VAL_COLOR), "{}\n", ToString(intersecs));
+  //fmt::print(fg(INFO_COLOR), "{}", "Found Intersection: ");
+  //fmt::print(fg(VAL_COLOR), "{}\n", ToString(intersecs));
 
   return intersecs;
 }
 
 void RectangleBoundsColl(Entity& e) {
-  auto inter = Intersections{0};
+  auto topInter = Intersections{0};
+  auto botInter = Intersections{0};
+  auto combinedInter = Intersections{0};
   auto p = e.shapeRec->getPosition();
 
-  // Calculate Rectangle Top
-  inter = CalcBoundIntersects(e.recBounds[0], e.recBounds[1]);
-  //fmt::print(fg(VAL_COLOR), "{} to {}\n", printVector(e.recBounds[0]),
-  //          printVector(e.recBounds[1]));
+  // Only calculate top and right intersections
+  topInter = CalcBoundIntersects(e.recBounds[0], e.recBounds[1]);
+  botInter = CalcBoundIntersects(e.recBounds[2], e.recBounds[3]);
 
-  switch (inter) {
+  // Join the intersections together
+  combinedInter = topInter | botInter;
+  fmt::print(fg(INFO_COLOR), "{}", "Found Intersection: ");
+  fmt::print(fg(VAL_COLOR), "{}\n", ToString(combinedInter));
+
+  switch (combinedInter) {
     case Intersections::None:
       break;
     case Intersections::Top:

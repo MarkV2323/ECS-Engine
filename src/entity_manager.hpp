@@ -33,6 +33,14 @@ class Entity {
   sf::Vector2f recSize{0, 0};
   sf::Vector2f recBounds[4];
 
+  // "Move" a position for a shape
+  void movePos(sf::Vector2f m) {
+    if (shapeRec) {
+      shapeRec->move(m);
+      UpdateRecData();
+    }
+  }
+
   // "Set" a position for a shape
   void setPos(sf::Vector2f p) {
     if (shapeRec) {
