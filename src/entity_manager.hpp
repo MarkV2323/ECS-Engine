@@ -8,7 +8,7 @@
 namespace ecs {
 class Entity {
  private:
-  void updateRecData() {
+  void UpdateRecData() {
     if (!shapeRec) return;
     auto gb = shapeRec->getGlobalBounds().position;
     auto gbs = shapeRec->getGlobalBounds().size;
@@ -37,7 +37,7 @@ class Entity {
   void setPos(sf::Vector2f p) {
     if (shapeRec) {
       shapeRec->setPosition(p);
-      updateRecData();
+      UpdateRecData();
     }
   }
 
@@ -50,7 +50,7 @@ class Entity {
     shapeCir = std::nullopt;
     shapeLine = std::nullopt;
     speed = {0.005f, 0.005f};
-    updateRecData();
+    UpdateRecData();
   }
 
   void setCir(sf::CircleShape s) {
@@ -72,7 +72,7 @@ class EntityMan {
  private:
  public:
   std::vector<Entity> entities{};
-  void addEntity(Entity e) { entities.push_back(e); }
+  void AddEntity(Entity e) { entities.push_back(e); }
 };
 
 }  // namespace ecs

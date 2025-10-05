@@ -5,7 +5,7 @@
 
 namespace ecs {
 
-void follow_cursor(sf::RenderWindow& win, EntityMan& eman) {
+void PlayerFollowCursor(sf::RenderWindow& win, EntityMan& eman) {
   // Pass an entity and update it's position based on the
   // cursor position
   sf::Vector2f cursor = static_cast<sf::Vector2f>(sf::Mouse::getPosition(win));
