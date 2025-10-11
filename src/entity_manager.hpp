@@ -38,9 +38,6 @@ class Entity {
   // "Move" a position for a shape
   void movePos(sf::Vector2f m) {
     if (shapeRec) {
-      fmt::print(fg(INFO_COLOR), "Moving from {} by {}\n",
-                 printVector(shapeRec->getGlobalBounds().position),
-                 printVector(m));
       shapeRec->move(m);
       UpdateRecData();
     }

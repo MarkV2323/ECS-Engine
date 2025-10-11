@@ -5,6 +5,7 @@
 #include "system_draw.hpp"
 #include "system_input.hpp"
 #include "system_movement.hpp"
+#include "system_collision.hpp"
 #include "utils.hpp"
 
 using namespace std;
@@ -28,7 +29,7 @@ int main() {
   Entity e1;
   e1.setName("Mark");
   e1.setRec(buildRec(Color::Green, {20.f, 20.f}, {300.f, 300.f}));
-  e1.setSpeed({1.31f, 1.31f});
+  e1.setSpeed({2.31f, 1.31f});
   e1.setPlayer();
   eman.AddEntity(e1);
 
@@ -57,6 +58,7 @@ int main() {
     // process systems
     // PlayerFollowCursor(window, eman);
     ProcessEntityMovement(window, eman);
+    ProcessCollisions(eman);
 
     // process drawing
     DrawEman(window, eman);
