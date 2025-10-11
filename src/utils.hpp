@@ -8,6 +8,7 @@
 namespace ecs {
 constexpr int WIN_WIDTH = 600;
 constexpr int WIN_HEIGHT = 600;
+constexpr int FRAME_RATE = 60;
 
 constexpr sf::Vector2f TOP_LEFT{0.f, 0.f};
 constexpr sf::Vector2f TOP_RIGHT{WIN_WIDTH, 0.f};

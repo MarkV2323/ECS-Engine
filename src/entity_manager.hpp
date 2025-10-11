@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
+
+#include "utils.hpp"
 #include <string>
 #include <vector>
 
@@ -36,6 +38,9 @@ class Entity {
   // "Move" a position for a shape
   void movePos(sf::Vector2f m) {
     if (shapeRec) {
+      fmt::print(fg(INFO_COLOR), "Moving from {} by {}\n",
+                 printVector(shapeRec->getGlobalBounds().position),
+                 printVector(m));
       shapeRec->move(m);
       UpdateRecData();
     }
@@ -57,7 +62,7 @@ class Entity {
     shapeRec = s;
     shapeCir = std::nullopt;
     shapeLine = std::nullopt;
-    speed = {0.005f, 0.005f};
+    speed = {0.05f, 0.05f};
     UpdateRecData();
   }
 
