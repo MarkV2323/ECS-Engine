@@ -90,8 +90,8 @@ class Entity {
       logString += fmt::format(fg(INFO_COLOR), "{} : ", "Name");
       logString += fmt::format(fg(VAL_COLOR), "{:<10}", name);
       logString += " - ";
-      logString += fmt::format(fg(INFO_COLOR), "{} : ", "centerPos");
-      logString += fmt::format(fg(VAL_COLOR), "{:<10}", printVector(recCenter));
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "topLeftPos");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", printVector(recBounds[0]));
       logString += " - ";
       logString += fmt::format(fg(INFO_COLOR), "{} : ", "Spd");
       logString += fmt::format(fg(VAL_COLOR), "{:<10}", printVector(*speed));
