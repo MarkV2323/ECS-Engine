@@ -61,6 +61,14 @@ int main() {
     // process drawing
     DrawEman(window, eman);
 
+    // process log
+    if (log_frame) {
+      for (auto& e : eman.entities) {
+        if (e.shapeRec) fmt::print("{}\n", e.log());
+        if (e.shapeLine) fmt::print("{}\n", e.log());
+      }
+    }
+
     if (game_paused && increment_frame) increment_frame = false;
 
   }

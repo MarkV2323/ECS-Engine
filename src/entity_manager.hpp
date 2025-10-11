@@ -2,10 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
-
-#include "utils.hpp"
 #include <string>
 #include <vector>
+
+#include "utils.hpp"
 
 namespace ecs {
 class Entity {
@@ -78,6 +78,37 @@ class Entity {
     shapeCir = std::nullopt;
     shapeLine = l;
     speed = std::nullopt;
+  }
+
+  std::string log() {
+    std::string logString = "";
+    if (shapeRec) {
+      // Type : Val - Name : Val - centerPos : Val - Spd : Val - Player : Val
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Type");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", "Rectangle");
+      logString += " - ";
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Name");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", name);
+      logString += " - ";
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "centerPos");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", printVector(recCenter));
+      logString += " - ";
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Spd");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", printVector(*speed));
+      logString += " - ";
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Player");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", *player);
+      return logString;
+    }
+    if (shapeLine) {
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Type");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", "Line");
+      logString += " - ";
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Name");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", name);
+      return logString;
+    }
+    return logString;
   }
 };
 
