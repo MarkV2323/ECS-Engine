@@ -6,6 +6,7 @@
 #include "system_input.hpp"
 #include "system_movement.hpp"
 #include "system_collision.hpp"
+#include "system_marshal.hpp"
 #include "utils.hpp"
 
 using namespace std;
@@ -48,6 +49,9 @@ int main() {
   //  auto rec = buildRec();
   //  auto localBounds = rec.getLocalBounds();
   //  fmt::print("{},{}\n", localBounds.size.x, localBounds.size.y);
+
+  // Call the Marshal System to save the entities
+  ProcessMarshalEntityMan(eman);
 
   while (window.isOpen()) {
     // process any input

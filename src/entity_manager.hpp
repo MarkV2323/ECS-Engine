@@ -77,6 +77,39 @@ class Entity {
     speed = std::nullopt;
   }
 
+  // Marshal an Entity to a string
+  std::string marshal() {
+    std::string mStr = "";
+
+    // Rectangle R G B POS_X POS_Y W H V_X V_Y
+    if (shapeRec && speed) {
+      mStr += fmt::format("{} ", "Rectangle");
+      mStr += fmt::format("{} ", shapeRec->getFillColor().r);
+      mStr += fmt::format("{} ", shapeRec->getFillColor().g);
+      mStr += fmt::format("{} ", shapeRec->getFillColor().b);
+      mStr += fmt::format("{} ", shapeRec->getPosition().x);
+      mStr += fmt::format("{} ", shapeRec->getPosition().y);
+      mStr += fmt::format("{} ", shapeRec->getSize().x);
+      mStr += fmt::format("{} ", shapeRec->getSize().y);
+      mStr += fmt::format("{} ", speed->x);
+      mStr += fmt::format("{}", speed->y);
+    }
+
+    // Line R G B POS_X POS_Y POS_X POS_Y
+    if (shapeLine) {
+      mStr += fmt::format("{} ", "Line");
+      mStr += fmt::format("{} ", (*shapeLine)[0].color.r);
+      mStr += fmt::format("{} ", (*shapeLine)[0].color.g);
+      mStr += fmt::format("{} ", (*shapeLine)[0].color.b);
+      mStr += fmt::format("{} ", (*shapeLine)[0].position.x);
+      mStr += fmt::format("{} ", (*shapeLine)[0].position.y);
+      mStr += fmt::format("{} ", (*shapeLine)[1].position.x);
+      mStr += fmt::format("{} ", (*shapeLine)[1].position.y);
+    }
+
+    return mStr;
+  }
+
   std::string log() {
     std::string logString = "";
     if (shapeRec) {
@@ -88,7 +121,8 @@ class Entity {
       logString += fmt::format(fg(VAL_COLOR), "{:<10}", name);
       logString += " - ";
       logString += fmt::format(fg(INFO_COLOR), "{} : ", "topLeftPos");
-      logString += fmt::format(fg(VAL_COLOR), "{:<10}", printVector(recBounds[0]));
+      logString +=
+          fmt::format(fg(VAL_COLOR), "{:<10}", printVector(recBounds[0]));
       logString += " - ";
       logString += fmt::format(fg(INFO_COLOR), "{} : ", "Spd");
       logString += fmt::format(fg(VAL_COLOR), "{:<10}", printVector(*speed));
