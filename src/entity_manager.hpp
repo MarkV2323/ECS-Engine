@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <cstdint>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -81,8 +83,9 @@ class Entity {
   std::string marshal() {
     std::string mStr = "";
 
-    // Rectangle R G B POS_X POS_Y W H V_X V_Y
+    // Name Rectangle R G B POS_X POS_Y W H V_X V_Y player
     if (shapeRec && speed) {
+      mStr += fmt::format("{} ", name);
       mStr += fmt::format("{} ", "Rectangle");
       mStr += fmt::format("{} ", shapeRec->getFillColor().r);
       mStr += fmt::format("{} ", shapeRec->getFillColor().g);
@@ -92,11 +95,17 @@ class Entity {
       mStr += fmt::format("{} ", shapeRec->getSize().x);
       mStr += fmt::format("{} ", shapeRec->getSize().y);
       mStr += fmt::format("{} ", speed->x);
-      mStr += fmt::format("{}", speed->y);
+      mStr += fmt::format("{} ", speed->y);
+      if (player) {
+        mStr += fmt::format("{}", (*player));
+      } else {
+        mStr += fmt::format("{}", false);
+      }
     }
 
-    // Line R G B POS_X POS_Y POS_X POS_Y
+    // Name Line R G B POS_X POS_Y POS_X POS_Y player
     if (shapeLine) {
+      mStr += fmt::format("{} ", name);
       mStr += fmt::format("{} ", "Line");
       mStr += fmt::format("{} ", (*shapeLine)[0].color.r);
       mStr += fmt::format("{} ", (*shapeLine)[0].color.g);
@@ -105,9 +114,112 @@ class Entity {
       mStr += fmt::format("{} ", (*shapeLine)[0].position.y);
       mStr += fmt::format("{} ", (*shapeLine)[1].position.x);
       mStr += fmt::format("{} ", (*shapeLine)[1].position.y);
+      if (player) {
+        mStr += fmt::format("{}", (*player));
+      } else {
+        mStr += fmt::format("{}", false);
+      }
     }
 
     return mStr;
+  }
+
+  bool unmarshal(std::string s) {
+    std::stringstream ss(s);
+    std::string token;
+
+    // Get name
+    ss >> token;
+    name = token;
+
+    // Get type
+    ss >> token;
+    if (token == "Rectangle") {
+      // build color
+      uint8_t colorVal = 0;
+      sf::Color color(0, 0, 0);
+      ss >> token;
+      colorVal = static_cast<uint8_t>(stoi(token));
+      color.r = colorVal;
+      ss >> token;
+      colorVal = static_cast<uint8_t>(stoi(token));
+      color.g = colorVal;
+      ss >> token;
+      colorVal = static_cast<uint8_t>(stoi(token));
+      color.b = colorVal;
+
+      // build pos
+      sf::Vector2f pos;
+      ss >> token;
+      pos.x = static_cast<float>(stoi(token));
+      ss >> token;
+      pos.y = static_cast<float>(stoi(token));
+
+      // build size
+      sf::Vector2f size;
+      ss >> token;
+      size.x = static_cast<float>(stoi(token));
+      ss >> token;
+      size.y = static_cast<float>(stoi(token));
+
+      // build speed
+      sf::Vector2f spd;
+      ss >> token;
+      spd.x = static_cast<float>(stoi(token));
+      ss >> token;
+      spd.y = static_cast<float>(stoi(token));
+
+      // build player
+      ss >> token;
+      if (token == "true") player = true;
+      if (token == "false") player = false;
+
+      // build rectangleShape
+      auto recShape = buildRec(color, size, pos);
+
+      // set rectangleShape
+      setRec(recShape);
+
+      // set speed
+      speed = spd;
+
+      return true;
+    } else if (token == "Line") {
+      // build color
+      uint8_t colorVal = 0;
+      sf::Color color(0, 0, 0);
+      ss >> token;
+      colorVal = static_cast<uint8_t>(stoi(token));
+      color.r = colorVal;
+      ss >> token;
+      colorVal = static_cast<uint8_t>(stoi(token));
+      color.g = colorVal;
+      ss >> token;
+      colorVal = static_cast<uint8_t>(stoi(token));
+      color.b = colorVal;
+
+      // build pos1
+      sf::Vector2f pos1;
+      ss >> token;
+      pos1.x = static_cast<float>(stoi(token));
+      ss >> token;
+      pos1.y = static_cast<float>(stoi(token));
+
+      // build pos2
+      sf::Vector2f pos2;
+      ss >> token;
+      pos2.x = static_cast<float>(stoi(token));
+      ss >> token;
+      pos2.y = static_cast<float>(stoi(token));
+
+      // build line
+      auto line = buildLine(pos1, pos2, color);
+      setLine(line);
+
+      return true;
+    }
+
+    return false;
   }
 
   std::string log() {

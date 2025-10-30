@@ -1,6 +1,7 @@
 #pragma once
 
 #include "entity_manager.hpp"
+#include "system_input.hpp"
 
 namespace ecs {
 
