@@ -2,6 +2,8 @@
 
 #include <fmt/color.h>
 
+#include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <string>
 
@@ -19,11 +21,11 @@ constexpr fmt::rgb INFO_COLOR = (0xFABD2F);
 constexpr fmt::rgb VAL_COLOR = (0xEBDBB2);
 }  // namespace ecs
 
-std::string printVector(sf::Vector2f p) {
+std::string PrintVector(sf::Vector2f p) {
   return fmt::format("({:.2f},{:.2f})", p.x, p.y);
 }
 
-void printConstants() {
+void PrintConstants() {
   using namespace ecs;
 
   fmt::print(fg(INFO_COLOR), "{:>11}", "WIDTH:");
@@ -33,19 +35,19 @@ void printConstants() {
   fmt::print(fg(VAL_COLOR), "{}\n", WIN_HEIGHT);
 
   fmt::print(fg(INFO_COLOR), "{:>11}", "TOP_LEFT:");
-  fmt::print(fg(VAL_COLOR), "{}\n", printVector(TOP_LEFT));
+  fmt::print(fg(VAL_COLOR), "{}\n", PrintVector(TOP_LEFT));
 
   fmt::print(fg(INFO_COLOR), "{:>11}", "TOP_RIGHT:");
-  fmt::print(fg(VAL_COLOR), "{}\n", printVector(TOP_RIGHT));
+  fmt::print(fg(VAL_COLOR), "{}\n", PrintVector(TOP_RIGHT));
 
   fmt::print(fg(INFO_COLOR), "{:>11}", "BOT_LEFT:");
-  fmt::print(fg(VAL_COLOR), "{}\n", printVector(BOT_LEFT));
+  fmt::print(fg(VAL_COLOR), "{}\n", PrintVector(BOT_LEFT));
 
   fmt::print(fg(INFO_COLOR), "{:>11}", "BOT_RIGHT:");
-  fmt::print(fg(VAL_COLOR), "{}\n", printVector(BOT_RIGHT));
+  fmt::print(fg(VAL_COLOR), "{}\n", PrintVector(BOT_RIGHT));
 }
 
-sf::CircleShape buildCir(sf::Color c = sf::Color::Red, float r = 4.f,
+inline sf::CircleShape BuildCir(sf::Color c = sf::Color::Red, float r = 4.f,
                          sf::Vector2f pos = {20.f, 20.f}) {
   sf::CircleShape circle;
   circle.setFillColor(c);
@@ -54,7 +56,7 @@ sf::CircleShape buildCir(sf::Color c = sf::Color::Red, float r = 4.f,
   return circle;
 }
 
-sf::RectangleShape buildRec(sf::Color c = sf::Color::Blue,
+inline sf::RectangleShape BuildRec(sf::Color c = sf::Color::Blue,
                             sf::Vector2f size = {8.f, 8.f},
                             sf::Vector2f pos = {20.f, 20.f}) {
   sf::RectangleShape rectangle;
@@ -64,7 +66,7 @@ sf::RectangleShape buildRec(sf::Color c = sf::Color::Blue,
   return rectangle;
 }
 
-sf::VertexArray buildLine(sf::Vector2f p1 = {0.f, 0.f},
+inline sf::VertexArray BuildLine(sf::Vector2f p1 = {0.f, 0.f},
                           sf::Vector2f p2 = {1.f, 1.f},
                           sf::Color c = sf::Color::Red) {
   sf::VertexArray line(sf::PrimitiveType::Lines, 2);

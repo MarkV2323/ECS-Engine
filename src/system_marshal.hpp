@@ -18,38 +18,38 @@ constexpr std::string CONFIG_FILE = "config.txt";
 fs::path config = cwd / CONFIG_FILE;
 
 // Checks config file, creates one if missing
-void checkConfig() {
+inline void CheckConfig() {
   if (fs::exists(config)) return;
   fmt::print(fg(INFO_COLOR), "{:>11} ", "CREATING CONFIG");
   fmt::print(fg(VAL_COLOR), "{}\n", config.string());
   std::ofstream out(config);
 }
 
-void unmarshalEntity(EntityMan& eman, std::string line) {
+inline void UnmarshalEntity(EntityMan& eman, std::string line) {
   Entity e{};
-  if (e.unmarshal(line)) eman.AddEntity(e);
+  if (e.Unmarshal(line)) eman.AddEntity(e);
 }
 
-void processUnmarshalEntityMan(EntityMan& eman) {
-  checkConfig();
+inline void ProcessUnmarshalEntityMan(EntityMan& eman) {
+  CheckConfig();
 
   std::ifstream conf(config);
   std::string line{""};
-  while (std::getline(conf, line)) unmarshalEntity(eman, line);
+  while (std::getline(conf, line)) UnmarshalEntity(eman, line);
 }
 
-void marshalEntity(Entity& e, std::ofstream& conf) {
-  conf << e.marshal() << std::endl;
+inline void MarshalEntity(Entity& e, std::ofstream& conf) {
+  conf << e.Marshal() << std::endl;
 }
 
 // Will record all saved entities into a file
-void ProcessMarshalEntityMan(EntityMan& eman) {
-  checkConfig();
+inline void ProcessMarshalEntityMan(EntityMan& eman) {
+  CheckConfig();
 
   std::ofstream conf(config);
 
   for (auto& e : eman.entities) {
-    marshalEntity(e, conf);
+    MarshalEntity(e, conf);
   }
 }
 

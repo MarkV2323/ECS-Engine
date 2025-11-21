@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window.hpp>
 
 #include "utils.hpp"
@@ -15,7 +16,7 @@ bool game_paused = false;
 bool increment_frame = false;
 bool log_frame = false;
 
-void ProcessInput(sf::RenderWindow& win, sf::Keyboard::Key key) {
+inline void ProcessInput(sf::RenderWindow& win, sf::Keyboard::Key key) {
   switch (key) {
     case (CLOSE_KEY):
       win.close();

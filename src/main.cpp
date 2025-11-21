@@ -27,8 +27,10 @@ int main() {
   window.setFramerateLimit(FRAME_RATE);
   EntityMan eman = {};
 
+  ProcessUnmarshalEntityMan(eman);
+
   // Load entities from a config file
-  processUnmarshalEntityMan(eman);
+  ProcessUnmarshalEntityMan(eman);
 
   // Call the Marshal System to save the entities
   // ProcessMarshalEntityMan(eman);
@@ -50,8 +52,8 @@ int main() {
     // process log
     if (log_frame) {
       for (auto& e : eman.entities) {
-        if (e.shapeRec) fmt::print("{}\n", e.log());
-        if (e.shapeLine) fmt::print("{}\n", e.log());
+        if (e.shapeRec) fmt::print("{}\n", e.Log());
+        if (e.shapeLine) fmt::print("{}\n", e.Log());
       }
     }
 

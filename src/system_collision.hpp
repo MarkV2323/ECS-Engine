@@ -17,7 +17,7 @@ enum class Intersections {
   Bot_Left = 10
 };
 
-std::string ToString(Intersections i) {
+inline std::string ToString(Intersections i) {
   switch (i) {
     case Intersections::None:
       return "None";
@@ -46,7 +46,7 @@ inline Intersections operator|(Intersections a, Intersections b) {
   return static_cast<Intersections>(static_cast<int>(a) | static_cast<int>(b));
 }
 
-bool LineLineCol(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3,
+inline bool LineLineCol(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3,
                  sf::Vector2f p4) {
   float denom = ((p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y));
 
@@ -61,23 +61,23 @@ bool LineLineCol(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3,
   return false;
 }
 
-bool TopLineIntersect(sf::Vector2f p1, sf::Vector2f p2) {
+inline bool TopLineIntersect(sf::Vector2f p1, sf::Vector2f p2) {
   return LineLineCol(p1, p2, TOP_LEFT, TOP_RIGHT);
 }
 
-bool BotLineIntersect(sf::Vector2f p1, sf::Vector2f p2) {
+inline bool BotLineIntersect(sf::Vector2f p1, sf::Vector2f p2) {
   return LineLineCol(p1, p2, BOT_LEFT, BOT_RIGHT);
 }
 
-bool RightLineIntersect(sf::Vector2f p1, sf::Vector2f p2) {
+inline bool RightLineIntersect(sf::Vector2f p1, sf::Vector2f p2) {
   return LineLineCol(p1, p2, TOP_RIGHT, BOT_RIGHT);
 }
 
-bool LeftLineIntersect(sf::Vector2f p1, sf::Vector2f p2) {
+inline bool LeftLineIntersect(sf::Vector2f p1, sf::Vector2f p2) {
   return LineLineCol(p1, p2, TOP_LEFT, BOT_LEFT);
 }
 
-Intersections CalcBoundIntersects(sf::Vector2f p1, sf::Vector2f p2) {
+inline Intersections CalcBoundIntersects(sf::Vector2f p1, sf::Vector2f p2) {
   Intersections intersecs{Intersections::None};
 
   if (TopLineIntersect(p1, p2)) intersecs = intersecs | Intersections::Top;
@@ -88,7 +88,7 @@ Intersections CalcBoundIntersects(sf::Vector2f p1, sf::Vector2f p2) {
   return intersecs;
 }
 
-void RectangleBounds(Entity& e) {
+inline void RectangleBounds(Entity& e) {
   auto collision = Intersections{0};
   auto p = e.shapeRec->getPosition();
   auto s = *e.speed;
@@ -103,36 +103,36 @@ void RectangleBounds(Entity& e) {
     case Intersections::None:
       break;
     case Intersections::Top:
-      e.movePos({0, 1});
-      e.setSpeed({s.x, s.y * -1});
+      e.MovePos({0, 1});
+      e.SetSpeed({s.x, s.y * -1});
       break;
     case Intersections::Bot:
-      e.movePos({0, -1});
-      e.setSpeed({s.x, s.y * -1});
+      e.MovePos({0, -1});
+      e.SetSpeed({s.x, s.y * -1});
       break;
     case Intersections::Right:
-      e.movePos({-1, 0});
-      e.setSpeed({s.x * -1, s.y});
+      e.MovePos({-1, 0});
+      e.SetSpeed({s.x * -1, s.y});
       break;
     case Intersections::Left:
-      e.movePos({1, 0});
-      e.setSpeed({s.x * -1, s.y});
+      e.MovePos({1, 0});
+      e.SetSpeed({s.x * -1, s.y});
       break;
     case Intersections::Top_Right:
-      e.movePos({1, 1});
-      e.setSpeed({s.x * -1, s.y * -1});
+      e.MovePos({1, 1});
+      e.SetSpeed({s.x * -1, s.y * -1});
       break;
     case Intersections::Top_Left:
-      e.movePos({-1, 1});
-      e.setSpeed({s.x * -1, s.y * -1});
+      e.MovePos({-1, 1});
+      e.SetSpeed({s.x * -1, s.y * -1});
       break;
     case Intersections::Bot_Right:
-      e.movePos({-1, -1});
-      e.setSpeed({s.x * -1, s.y * -1});
+      e.MovePos({-1, -1});
+      e.SetSpeed({s.x * -1, s.y * -1});
       break;
     case Intersections::Bot_Left:
-      e.movePos({1, -1});
-      e.setSpeed({s.x * -1, s.y * -1});
+      e.MovePos({1, -1});
+      e.SetSpeed({s.x * -1, s.y * -1});
       break;
     default:
       break;
@@ -144,9 +144,9 @@ void RectangleBounds(Entity& e) {
   }
 }
 
-void RectangleCollisions(Entity& e) { RectangleBounds(e); }
+inline void RectangleCollisions(Entity& e) { RectangleBounds(e); }
 
-void ProcessCollisions(EntityMan& eman) {
+inline void ProcessCollisions(EntityMan& eman) {
   for (auto& e : eman.entities) {
     if (e.shapeRec && e.speed) RectangleCollisions(e);
     if (e.shapeCir && e.speed) continue;

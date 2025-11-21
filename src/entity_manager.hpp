@@ -38,7 +38,7 @@ class Entity {
   sf::Vector2f recBounds[4];
 
   // "Move" a position for a shape
-  void movePos(sf::Vector2f m) {
+  void MovePos(sf::Vector2f m) {
     if (shapeRec) {
       shapeRec->move(m);
       UpdateRecData();
@@ -46,18 +46,18 @@ class Entity {
   }
 
   // "Set" a position for a shape
-  void setPos(sf::Vector2f p) {
+  void SetPos(sf::Vector2f p) {
     if (shapeRec) {
       shapeRec->setPosition(p);
       UpdateRecData();
     }
   }
 
-  void setName(std::string s) { name = s; }
-  void setSpeed(sf::Vector2f v) { speed = v; }
-  void setPlayer() { player = true; }
+  void SetName(std::string s) { name = s; }
+  void SetSpeed(sf::Vector2f v) { speed = v; }
+  void SetPlayer() { player = true; }
 
-  void setRec(sf::RectangleShape s) {
+  void SetRec(sf::RectangleShape s) {
     shapeRec = s;
     shapeCir = std::nullopt;
     shapeLine = std::nullopt;
@@ -65,14 +65,14 @@ class Entity {
     UpdateRecData();
   }
 
-  void setCir(sf::CircleShape s) {
+  void SetCir(sf::CircleShape s) {
     shapeRec = std::nullopt;
     shapeCir = s;
     shapeLine = std::nullopt;
     speed = {0.005f, 0.005f};
   }
 
-  void setLine(sf::VertexArray l) {
+  void SetLine(sf::VertexArray l) {
     shapeRec = std::nullopt;
     shapeCir = std::nullopt;
     shapeLine = l;
@@ -80,7 +80,7 @@ class Entity {
   }
 
   // Marshal an Entity to a string
-  std::string marshal() {
+  std::string Marshal() {
     std::string mStr = "";
 
     // Name Rectangle R G B POS_X POS_Y W H V_X V_Y player
@@ -124,7 +124,7 @@ class Entity {
     return mStr;
   }
 
-  bool unmarshal(std::string s) {
+  bool Unmarshal(std::string s) {
     std::stringstream ss(s);
     std::string token;
 
@@ -175,10 +175,10 @@ class Entity {
       if (token == "false") player = false;
 
       // build rectangleShape
-      auto recShape = buildRec(color, size, pos);
+      auto recShape = BuildRec(color, size, pos);
 
       // set rectangleShape
-      setRec(recShape);
+      SetRec(recShape);
 
       // set speed
       speed = spd;
@@ -213,8 +213,8 @@ class Entity {
       pos2.y = static_cast<float>(stoi(token));
 
       // build line
-      auto line = buildLine(pos1, pos2, color);
-      setLine(line);
+      auto line = BuildLine(pos1, pos2, color);
+      SetLine(line);
 
       return true;
     }
@@ -222,7 +222,7 @@ class Entity {
     return false;
   }
 
-  std::string log() {
+  std::string Log() {
     std::string logString = "";
     if (shapeRec) {
       // Type : Val - Name : Val - centerPos : Val - Spd : Val - Player : Val
@@ -234,10 +234,10 @@ class Entity {
       logString += " - ";
       logString += fmt::format(fg(INFO_COLOR), "{} : ", "topLeftPos");
       logString +=
-          fmt::format(fg(VAL_COLOR), "{:<10}", printVector(recBounds[0]));
+          fmt::format(fg(VAL_COLOR), "{:<10}", PrintVector(recBounds[0]));
       logString += " - ";
       logString += fmt::format(fg(INFO_COLOR), "{} : ", "Spd");
-      logString += fmt::format(fg(VAL_COLOR), "{:<10}", printVector(*speed));
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", PrintVector(*speed));
       logString += " - ";
       logString += fmt::format(fg(INFO_COLOR), "{} : ", "Player");
       logString += fmt::format(fg(VAL_COLOR), "{:<10}", *player);

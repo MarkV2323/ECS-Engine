@@ -1,12 +1,13 @@
 #pragma once
 
+#include "entity_manager.hpp"
 namespace ecs {
 
-void ProcessRec(Entity& e) {
-  e.movePos(*e.speed);
+inline void ProcessRec(Entity& e) {
+  e.MovePos(*e.speed);
 }
 
-void ProcessEntityMovement(sf::RenderWindow& win, EntityMan& eman) {
+inline void ProcessEntityMovement(sf::RenderWindow& win, EntityMan& eman) {
   for (auto& e : eman.entities) {
     if (!e.speed) {
       continue;

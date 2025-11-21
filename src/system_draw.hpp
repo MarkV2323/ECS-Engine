@@ -7,7 +7,7 @@
 namespace ecs {
 
 // Draw all possible entities from the EntityManager
-void DrawEman(sf::RenderWindow& win, EntityMan& eman) {
+inline void DrawEman(sf::RenderWindow& win, EntityMan& eman) {
   win.clear();
   for (auto& e : eman.entities) {
     if (e.shapeRec) win.draw(*e.shapeRec);
