@@ -13,11 +13,11 @@ using namespace std;
 using namespace sf;
 using namespace ecs;
 
-void ProcessWindowEvent(RenderWindow& win) {
+void ProcessWindowEvent(RenderWindow& win, EntityMan& eman) {
   while (const optional event = win.pollEvent()) {
     if (event->is<Event::Closed>()) win.close();
     if (event->is<Event::KeyPressed>()) {
-      ProcessInput(win, event.value().getIf<Event::KeyPressed>()->code);
+      ProcessInput(win, eman, event.value().getIf<Event::KeyPressed>()->code);
     }
   }
 }
@@ -27,8 +27,6 @@ int main() {
   window.setFramerateLimit(FRAME_RATE);
   EntityMan eman = {};
 
-  ProcessUnmarshalEntityMan(eman);
-
   // Load entities from a config file
   ProcessUnmarshalEntityMan(eman);
 
@@ -37,7 +35,7 @@ int main() {
 
   while (window.isOpen()) {
     // process any input
-    ProcessWindowEvent(window);
+    ProcessWindowEvent(window, eman);
 
     if (game_paused && !increment_frame) continue;
 
