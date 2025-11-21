@@ -30,9 +30,6 @@ int main() {
   // Load entities from a config file
   ProcessUnmarshalEntityMan(eman);
 
-  // Call the Marshal System to save the entities
-  // ProcessMarshalEntityMan(eman);
-
   while (window.isOpen()) {
     // process any input
     ProcessWindowEvent(window, eman);

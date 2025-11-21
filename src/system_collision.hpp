@@ -47,7 +47,7 @@ inline Intersections operator|(Intersections a, Intersections b) {
 }
 
 inline bool LineLineCol(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3,
-                 sf::Vector2f p4) {
+                        sf::Vector2f p4) {
   float denom = ((p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y));
 
   float uA =
@@ -144,11 +144,43 @@ inline void RectangleBounds(Entity& e) {
   }
 }
 
+// Calculate collision based off circle and Window Bounds
+inline void CircleBounds(Entity& e) {
+  auto p = e.shapeCir->getPosition();
+  auto r = e.shapeCir->getRadius();
+  auto s = *e.speed;
+
+  // left bound
+  if (p.x < r) {
+    e.MovePos({1, 0});
+    e.SetSpeed({s.x * -1, s.y});
+  }
+  // top bound
+  if (p.y < r) {
+    e.MovePos({0, 1});
+    e.SetSpeed({s.x, s.y * -1});
+  }
+
+  // right bound
+  if (p.x > WIN_WIDTH - r) {
+    e.MovePos({-1, 0});
+    e.SetSpeed({s.x * -1, s.y});
+  }
+  // bottom bound
+  if (p.y > WIN_HEIGHT - r) {
+    e.MovePos({0, -1});
+    e.SetSpeed({s.x, s.y * -1});
+  }
+}
+
 inline void RectangleCollisions(Entity& e) { RectangleBounds(e); }
+
+inline void CircleCollisions(Entity& e) { CircleBounds(e); }
 
 inline void ProcessCollisions(EntityMan& eman) {
   for (auto& e : eman.entities) {
     if (e.shapeRec && e.speed) RectangleCollisions(e);
+    if (e.shapeCir && e.speed) CircleCollisions(e);
     if (e.shapeCir && e.speed) continue;
   }
 }

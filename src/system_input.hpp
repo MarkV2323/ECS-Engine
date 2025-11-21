@@ -19,7 +19,8 @@ bool game_paused = false;
 bool increment_frame = false;
 bool log_frame = false;
 
-inline void ProcessInput(sf::RenderWindow& win, EntityMan& eman, sf::Keyboard::Key key) {
+inline void ProcessInput(sf::RenderWindow& win, EntityMan& eman,
+                         sf::Keyboard::Key key) {
   switch (key) {
     case (CLOSE_KEY):
       win.close();

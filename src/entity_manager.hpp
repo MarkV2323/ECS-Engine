@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <cstdint>
 #include <sstream>
 #include <string>
@@ -43,6 +44,9 @@ class Entity {
       shapeRec->move(m);
       UpdateRecData();
     }
+    if (shapeCir) {
+      shapeCir->move(m);
+    }
   }
 
   // "Set" a position for a shape
@@ -51,12 +55,16 @@ class Entity {
       shapeRec->setPosition(p);
       UpdateRecData();
     }
+    if (shapeCir) {
+      shapeCir->setPosition(p);
+    }
   }
 
   void SetName(std::string s) { name = s; }
   void SetSpeed(sf::Vector2f v) { speed = v; }
   void SetPlayer() { player = true; }
 
+  // Set a rectangles components
   void SetRec(sf::RectangleShape s) {
     shapeRec = s;
     shapeCir = std::nullopt;
@@ -65,6 +73,7 @@ class Entity {
     UpdateRecData();
   }
 
+  // Set a circles components
   void SetCir(sf::CircleShape s) {
     shapeRec = std::nullopt;
     shapeCir = s;
@@ -72,6 +81,7 @@ class Entity {
     speed = {0.005f, 0.005f};
   }
 
+  // Set a lines components
   void SetLine(sf::VertexArray l) {
     shapeRec = std::nullopt;
     shapeCir = std::nullopt;
@@ -103,6 +113,25 @@ class Entity {
       }
     }
 
+    // Name Circle R G B POS_X POS_Y R player
+    if (shapeCir && speed) {
+      mStr += fmt::format("{} ", name);
+      mStr += fmt::format("{} ", "Circle");
+      mStr += fmt::format("{} ", shapeCir->getFillColor().r);
+      mStr += fmt::format("{} ", shapeCir->getFillColor().g);
+      mStr += fmt::format("{} ", shapeCir->getFillColor().b);
+      mStr += fmt::format("{} ", shapeCir->getPosition().x);
+      mStr += fmt::format("{} ", shapeCir->getPosition().y);
+      mStr += fmt::format("{} ", shapeCir->getRadius());
+      mStr += fmt::format("{} ", speed->x);
+      mStr += fmt::format("{} ", speed->y);
+      if (player) {
+        mStr += fmt::format("{}", (*player));
+      } else {
+        mStr += fmt::format("{}", false);
+      }
+    }
+
     // Name Line R G B POS_X POS_Y POS_X POS_Y player
     if (shapeLine) {
       mStr += fmt::format("{} ", name);
@@ -124,6 +153,7 @@ class Entity {
     return mStr;
   }
 
+  // Retreive an entities information from a string.
   bool Unmarshal(std::string s) {
     std::stringstream ss(s);
     std::string token;
@@ -184,7 +214,58 @@ class Entity {
       speed = spd;
 
       return true;
-    } else if (token == "Line") {
+    }
+
+    if (token == "Circle") {
+      // build color
+      uint8_t colorVal = 0;
+      sf::Color color(0, 0, 0);
+      ss >> token;
+      colorVal = static_cast<uint8_t>(stoi(token));
+      color.r = colorVal;
+      ss >> token;
+      colorVal = static_cast<uint8_t>(stoi(token));
+      color.g = colorVal;
+      ss >> token;
+      colorVal = static_cast<uint8_t>(stoi(token));
+      color.b = colorVal;
+
+      // build pos
+      sf::Vector2f pos;
+      ss >> token;
+      pos.x = static_cast<float>(stoi(token));
+      ss >> token;
+      pos.y = static_cast<float>(stoi(token));
+
+      // build size
+      float radius = 0.f;
+      ss >> token;
+      radius = static_cast<float>(stoi(token));
+
+      // build speed
+      sf::Vector2f spd;
+      ss >> token;
+      spd.x = static_cast<float>(stoi(token));
+      ss >> token;
+      spd.y = static_cast<float>(stoi(token));
+
+      // build player
+      ss >> token;
+      if (token == "true") player = true;
+      if (token == "false") player = false;
+
+      // build rectangleShape
+      auto cirShape = BuildCir(color, radius, pos);
+
+      // set rectangleShape
+      SetCir(cirShape);
+
+      // set speed
+      speed = spd;
+
+      return true;
+    }
+    if (token == "Line") {
       // build color
       uint8_t colorVal = 0;
       sf::Color color(0, 0, 0);
@@ -222,6 +303,7 @@ class Entity {
     return false;
   }
 
+  // Log an entities information to the console
   std::string Log() {
     std::string logString = "";
     if (shapeRec) {
@@ -235,6 +317,20 @@ class Entity {
       logString += fmt::format(fg(INFO_COLOR), "{} : ", "topLeftPos");
       logString +=
           fmt::format(fg(VAL_COLOR), "{:<10}", PrintVector(recBounds[0]));
+      logString += " - ";
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Spd");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", PrintVector(*speed));
+      logString += " - ";
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Player");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", *player);
+      return logString;
+    }
+    if (shapeCir) {
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Type");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", "Circle");
+      logString += " - ";
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Name");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", name);
       logString += " - ";
       logString += fmt::format(fg(INFO_COLOR), "{} : ", "Spd");
       logString += fmt::format(fg(VAL_COLOR), "{:<10}", PrintVector(*speed));
