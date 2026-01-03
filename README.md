@@ -12,3 +12,8 @@ The test bench may contain different iterations of the ECS Engine over time as I
 ```
 cmake --build .\build\ ; .\build\bin\Debug\ECS_ENGINE.exe
 ```
+
+## VSCode with this project
+I build the binary via VCPKG for dependencie management and CMake for build system. CMakePresets.json is what allows VSCode CMake extenstions to bridge the gap between VCPKG and CMake, specifically passing the requried variables to CMake so it can find SFML and FMT for example...
+
+*Make sure to have a environment variable, VCPKGCMAKE set to the vcpkg.cmake in order for this to work.*
