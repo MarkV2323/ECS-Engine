@@ -13,6 +13,12 @@ The test bench may contain different iterations of the ECS Engine over time as I
 cmake --build .\build\ ; .\build\bin\Debug\ECS_ENGINE.exe
 ```
 
+For linux we use vcpkg for our dependencie management & for neovim we need
+to export the compile commands so our LSP knows where to find the packages.
+```
+cmake -B build/ -DCMAKE_TOOLCHAIN_FILE=/opt/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && cmake --build build/
+```
+
 ## VSCode with this project
 I build the binary via VCPKG for dependencie management and CMake for build system. CMakePresets.json is what allows VSCode CMake extenstions to bridge the gap between VCPKG and CMake, specifically passing the requried variables to CMake so it can find SFML and FMT for example...
 
