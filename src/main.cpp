@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 #include "entity_manager.hpp"
 #include "system_collision.hpp"
@@ -7,6 +8,7 @@
 #include "system_input.hpp"
 #include "system_marshal.hpp"
 #include "system_movement.hpp"
+#include "textures.hpp"
 #include "utils.hpp"
 
 using namespace std;
@@ -25,10 +27,19 @@ void ProcessWindowEvent(RenderWindow& win, EntityMan& eman) {
 int main() {
   RenderWindow window(VideoMode({WIN_WIDTH, WIN_HEIGHT}), "SFML works!");
   window.setFramerateLimit(FRAME_RATE);
-  EntityMan eman = {};
 
-  // Load entities from a config file
+  // load entities from a config file
+  EntityMan eman = {};
   ProcessUnmarshalEntityMan(eman);
+
+  // load textures from files
+  TextureMan tman = {};
+  tman.LoadTextures();
+  tman.PrintLoadedTextures();
+
+  // sf::Sprite sprite(tman.GetTexture("player"));
+  // sprite.setPosition({100.f, 40.f});
+  // sprite.setTextureRect({{0, 0}, {64, 64}});
 
   while (window.isOpen()) {
     // process any input

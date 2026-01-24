@@ -5,12 +5,19 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <filesystem>
 #include <string>
 
+namespace fs = std::filesystem;
+
 namespace ecs {
+
 constexpr int WIN_WIDTH = 600;
 constexpr int WIN_HEIGHT = 600;
 constexpr int FRAME_RATE = 60;
+
+// Contains working directory of binary
+const fs::path CWD = fs::current_path();
 
 constexpr sf::Vector2f TOP_LEFT{0.f, 0.f};
 constexpr sf::Vector2f TOP_RIGHT{WIN_WIDTH, 0.f};

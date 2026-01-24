@@ -15,11 +15,8 @@ namespace ecs {
 // Contains the name of our config file
 constexpr std::string CONFIG_FILE = "config.txt";
 
-// Contains working directory of binary
-fs::path cwd = fs::current_path();
-
 // Contains file path + name of our config file
-fs::path config = cwd / CONFIG_FILE;
+const fs::path config = CWD / CONFIG_FILE;
 
 // Checks config file, creates one if missing
 inline void CheckConfig() {
