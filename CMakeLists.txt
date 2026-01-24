@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
-project(SFML_Example LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_TOOLCHAIN_FILE "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE PATH "vcpkg toolchain file")
+
+project(SFML_Example LANGUAGES CXX)
 
 # Use VCPKG to find the following libs,
 # -> SFML (used for windowing, drawing and general media
