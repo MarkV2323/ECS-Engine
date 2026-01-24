@@ -7,7 +7,7 @@ project(SFML_Example LANGUAGES CXX)
 # Use VCPKG to find the following libs,
 # -> SFML (used for windowing, drawing and general media
 # -> FMT  (used for general stdout)
-find_package(SFML REQUIRED COMPONENTS Window Graphics Network Audio)
+find_package(SFML CONFIG REQUIRED COMPONENTS Window Graphics Network Audio)
 find_package(fmt CONFIG REQUIRED)
 
 # GLOB source and headers
