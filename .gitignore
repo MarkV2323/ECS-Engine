@@ -1,12 +1,8 @@
-# Program related
-config.txt
-
 # Clangd related
 .cache/
 
 # NVIM related
 Session.vim
-
 
 # VSCode releated
 .vscode/
