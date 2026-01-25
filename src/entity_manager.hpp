@@ -80,6 +80,9 @@ class Entity {
   std::optional<sf::Vector2f> speed = std::nullopt;
   std::optional<bool> player = std::nullopt;
 
+  // Animation related vars
+  bool animations {false};
+  
   // These are stored window "global" positions for the rectangle.
   sf::Vector2f recCenter{0, 0};
   sf::Vector2f recSize{0, 0};
@@ -94,6 +97,9 @@ class Entity {
     if (shapeCir) {
       shapeCir->move(m);
     }
+    if (shapeSprite) {
+      shapeSprite->move(m);
+    }
   }
 
   // "Set" a position for a shape
@@ -104,6 +110,9 @@ class Entity {
     }
     if (shapeCir) {
       shapeCir->setPosition(p);
+    }
+    if (shapeSprite) {
+      shapeSprite->setPosition(p);
     }
   }
 
@@ -142,6 +151,7 @@ class Entity {
     shapeCir = std::nullopt;
     shapeLine = std::nullopt;
     shapeSprite = s;
+    animations = true;
     speed = {0.05f, 0.05f};
   }
 
@@ -411,6 +421,27 @@ class Entity {
   // Log an entities information to the console
   std::string Log() {
     std::string logString = "";
+    if (shapeSprite) {
+      // Type : Val - Name : Val - centerPos : Val - Spd : Val - Player : Val
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Type");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", "Sprite");
+      logString += " - ";
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Name");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", name);
+      logString += " - ";
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "topLeftPos");
+      auto pPos = shapeSprite->getPosition();
+      logString +=
+          fmt::format(fg(VAL_COLOR), "{:<10}", PrintVector(pPos));
+      logString += " - ";
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Spd");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", PrintVector(*speed));
+      logString += " - ";
+      logString += fmt::format(fg(INFO_COLOR), "{} : ", "Player");
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", *player);
+      return logString;
+    }
+
     if (shapeRec) {
       // Type : Val - Name : Val - centerPos : Val - Spd : Val - Player : Val
       logString += fmt::format(fg(INFO_COLOR), "{} : ", "Type");
@@ -462,5 +493,6 @@ class EntityMan {
   std::vector<Entity> entities{};
   void AddEntity(Entity e) { entities.push_back(e); }
 };
+
 }  // namespace ecs
 
