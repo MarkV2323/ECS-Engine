@@ -1,14 +1,58 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <cstdint>
+#include <optional>
 #include <sstream>
 #include <string>
 #include <vector>
 
+#include "textures.hpp"
 #include "utils.hpp"
+
+inline sf::CircleShape BuildCir(sf::Color c = sf::Color::Red, float r = 4.f,
+                                sf::Vector2f pos = {20.f, 20.f}) {
+  sf::CircleShape circle;
+  circle.setFillColor(c);
+  circle.setRadius(r);
+  circle.setOrigin({r, r});
+  circle.setPosition(pos);
+  return circle;
+}
+
+inline sf::RectangleShape BuildRec(sf::Color c = sf::Color::Blue,
+                                   sf::Vector2f size = {8.f, 8.f},
+                                   sf::Vector2f pos = {20.f, 20.f}) {
+  sf::RectangleShape rectangle;
+  rectangle.setFillColor(c);
+  rectangle.setSize(size);
+  rectangle.setPosition(pos);
+  return rectangle;
+}
+
+inline sf::VertexArray BuildLine(sf::Vector2f p1 = {0.f, 0.f},
+                                 sf::Vector2f p2 = {1.f, 1.f},
+                                 sf::Color c = sf::Color::Red) {
+  sf::VertexArray line(sf::PrimitiveType::Lines, 2);
+  line[0].position = p1;
+  line[1].position = p2;
+  line[0].color = c;
+  line[1].color = c;
+  return line;
+}
+
+inline sf::Sprite BuildSprite(sf::IntRect ir = {{0, 0}, {64, 64}},
+                              sf::Vector2f pos = {20.f, 20.f},
+                              std::string textureName = {}) {
+  sf::Sprite s(ecs::tman.GetTexture(textureName));
+  s.setTextureRect(ir);
+  s.setPosition(pos);
+  return s;
+}
 
 namespace ecs {
 class Entity {
@@ -27,9 +71,12 @@ class Entity {
 
  public:
   std::string name = "null";
+
+  // components for an entity
   std::optional<sf::RectangleShape> shapeRec = std::nullopt;
   std::optional<sf::CircleShape> shapeCir = std::nullopt;
   std::optional<sf::VertexArray> shapeLine = std::nullopt;
+  std::optional<sf::Sprite> shapeSprite = std::nullopt;
   std::optional<sf::Vector2f> speed = std::nullopt;
   std::optional<bool> player = std::nullopt;
 
@@ -87,6 +134,15 @@ class Entity {
     shapeCir = std::nullopt;
     shapeLine = l;
     speed = std::nullopt;
+  }
+
+  // Set a sprites components
+  void SetSprite(sf::Sprite s) {
+    shapeRec = std::nullopt;
+    shapeCir = std::nullopt;
+    shapeLine = std::nullopt;
+    shapeSprite = s;
+    speed = {0.05f, 0.05f};
   }
 
   // Marshal an Entity to a string
@@ -265,6 +321,7 @@ class Entity {
 
       return true;
     }
+
     if (token == "Line") {
       // build color
       uint8_t colorVal = 0;
@@ -297,6 +354,54 @@ class Entity {
       auto line = BuildLine(pos1, pos2, color);
       SetLine(line);
 
+      return true;
+    }
+
+    if (token == "Sprite") {
+      // build sprite pos_rect
+      sf::Vector2i topLeftPos{};
+      ss >> token;
+      topLeftPos.x = stoi(token);
+      ss >> token;
+      topLeftPos.y = stoi(token);
+
+      sf::Vector2i widthHeight{};
+      ss >> token;
+      widthHeight.x = stoi(token);
+      ss >> token;
+      widthHeight.y = stoi(token);
+
+      sf::IntRect spriteBounds{topLeftPos, widthHeight};
+
+      // build pos
+      sf::Vector2f pos;
+      ss >> token;
+      pos.x = static_cast<float>(stoi(token));
+      ss >> token;
+      pos.y = static_cast<float>(stoi(token));
+
+      // build speed
+      sf::Vector2f spd;
+      ss >> token;
+      spd.x = static_cast<float>(stoi(token));
+      ss >> token;
+      spd.y = static_cast<float>(stoi(token));
+
+      // build player
+      ss >> token;
+      if (token == "true") player = true;
+      if (token == "false") player = false;
+      
+      // build textureName
+      std::string textureName {};
+      ss >> token;
+      textureName = token;
+
+      // setup entity components
+      auto spriteShape = BuildSprite(spriteBounds, pos, textureName);
+      SetSprite(spriteShape);
+      speed = spd;
+      
       return true;
     }
 
@@ -357,5 +462,5 @@ class EntityMan {
   std::vector<Entity> entities{};
   void AddEntity(Entity e) { entities.push_back(e); }
 };
-
 }  // namespace ecs
+

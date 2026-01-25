@@ -13,18 +13,23 @@ class TextureMan {
   constexpr static std::string TEXTURE_PATH = "assests";
 
   // Contains file path + name of our texture path
-  const fs::path textPath = CWD / TEXTURE_PATH;
+  const std::filesystem::path textPath = CWD / TEXTURE_PATH;
 
   // global texture map, names -> texture
   std::map<std::string, sf::Texture> textureMap{};
 
  public:
+  TextureMan() {
+    LoadTextures();
+  }
+
   // Retreive a texture from the map
   const sf::Texture& GetTexture(std::string t) { return textureMap[t]; }
 
   // Load textures into the texture map from a file directory
   void LoadTextures() {
     using namespace ecs;
+    namespace fs = std::filesystem;
 
     fmt::print(fg(INFO_COLOR), "{:>11}", "TEXTURE_FILE_PATH: ");
     fmt::print(fg(VAL_COLOR), "{}\n", textPath.string());
@@ -65,4 +70,8 @@ class TextureMan {
     }
   }
 };
+
+// global tman object
+inline TextureMan tman = {};
+
 }  // namespace ecs

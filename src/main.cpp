@@ -2,6 +2,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "entity_manager.hpp"
+#include "globals.hpp"
 #include "system_collision.hpp"
 #include "system_cursorMovement.hpp"
 #include "system_draw.hpp"
@@ -15,7 +16,7 @@ using namespace std;
 using namespace sf;
 using namespace ecs;
 
-void ProcessWindowEvent(RenderWindow& win, EntityMan& eman) {
+inline void ProcessWindowEvent(RenderWindow& win, EntityMan& eman) {
   while (const optional event = win.pollEvent()) {
     if (event->is<Event::Closed>()) win.close();
     if (event->is<Event::KeyPressed>()) {
@@ -29,12 +30,9 @@ int main() {
   window.setFramerateLimit(FRAME_RATE);
 
   // load entities from a config file
-  EntityMan eman = {};
   ProcessUnmarshalEntityMan(eman);
 
-  // load textures from files
-  TextureMan tman = {};
-  tman.LoadTextures();
+  // print loaded textures
   tman.PrintLoadedTextures();
 
   // sf::Sprite sprite(tman.GetTexture("player"));

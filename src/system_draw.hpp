@@ -13,6 +13,7 @@ inline void DrawEman(sf::RenderWindow& win, EntityMan& eman) {
     if (e.shapeRec) win.draw(*e.shapeRec);
     if (e.shapeCir) win.draw(*e.shapeCir);
     if (e.shapeLine) win.draw(*e.shapeLine);
+    if (e.shapeSprite) win.draw(*e.shapeSprite);
   }
   win.display();
 }
