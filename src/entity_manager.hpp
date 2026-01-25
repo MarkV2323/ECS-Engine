@@ -5,6 +5,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include <cstddef>
 #include <cstdint>
 #include <optional>
 #include <sstream>
@@ -82,6 +83,17 @@ class Entity {
 
   // Animation related vars
   bool animations {false};
+  size_t gameFrame {0};
+  size_t frameCount {0};
+  size_t animFrame {0};
+  enum lastDirection {
+    up,
+    down,
+    left,
+    right,
+    none
+  };
+  lastDirection ld {none};
   
   // These are stored window "global" positions for the rectangle.
   sf::Vector2f recCenter{0, 0};
@@ -152,6 +164,7 @@ class Entity {
     shapeLine = std::nullopt;
     shapeSprite = s;
     animations = true;
+    frameCount = 4;
     speed = {0.05f, 0.05f};
   }
 
@@ -410,6 +423,7 @@ class Entity {
       // setup entity components
       auto spriteShape = BuildSprite(spriteBounds, pos, textureName);
       SetSprite(spriteShape);
+      animations = true;
       speed = spd;
       
       return true;

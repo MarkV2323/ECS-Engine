@@ -47,7 +47,7 @@ int main() {
     ProcessRealInput(eman);
     ProcessEntityMovement(window, eman);
     ProcessCollisions(eman);
-    ProcessAnimations();
+    ProcessAnimations(eman);
 
     // process drawing
     DrawEman(window, eman);

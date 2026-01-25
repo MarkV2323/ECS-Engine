@@ -29,25 +29,33 @@ inline void ProcessRealInput(EntityMan& eman) {
     fmt::print(fg(INFO_COLOR), "{}\n", "UP pressed!");
     for (auto& e : eman.entities) {
       if (!e.player || !e.shapeSprite || !e.speed) continue;
+      e.ld = Entity::up;
       e.MovePos({0.f, e.speed->y * -1});
     }
   } else if (sf::Keyboard::isKeyPressed(DOWN_KEY)) {
     fmt::print(fg(INFO_COLOR), "{}\n", "DOWN pressed!");
     for (auto& e : eman.entities) {
       if (!e.player || !e.shapeSprite || !e.speed) continue;
+      e.ld = Entity::down;
       e.MovePos({0.f, e.speed->y});
     }
   } else if (sf::Keyboard::isKeyPressed(LEFT_KEY)) {
     fmt::print(fg(INFO_COLOR), "{}\n", "LEFT pressed!");
     for (auto& e : eman.entities) {
       if (!e.player || !e.shapeSprite || !e.speed) continue;
+      e.ld = Entity::left;
       e.MovePos({e.speed->x * -1, 0.f});
     }
   } else if (sf::Keyboard::isKeyPressed(RIGHT_KEY)) {
     fmt::print(fg(INFO_COLOR), "{}\n", "RIGHT pressed!");
     for (auto& e : eman.entities) {
       if (!e.player || !e.shapeSprite || !e.speed) continue;
+      e.ld = Entity::right;
       e.MovePos({e.speed->x, 0.f});
+    }
+  } else {
+    for (auto& e : eman.entities) {
+      e.ld = Entity::none;
     }
   }
 }
