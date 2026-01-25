@@ -35,10 +35,6 @@ int main() {
   // print loaded textures
   tman.PrintLoadedTextures();
 
-  // sf::Sprite sprite(tman.GetTexture("player"));
-  // sprite.setPosition({100.f, 40.f});
-  // sprite.setTextureRect({{0, 0}, {64, 64}});
-
   while (window.isOpen()) {
     // process any input
     ProcessWindowEvent(window, eman);
