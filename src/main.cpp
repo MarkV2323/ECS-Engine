@@ -3,6 +3,7 @@
 
 #include "entity_manager.hpp"
 #include "globals.hpp"
+#include "system_animation.hpp"
 #include "system_collision.hpp"
 #include "system_cursorMovement.hpp"
 #include "system_draw.hpp"
@@ -43,8 +44,10 @@ int main() {
 
     // process systems
     // PlayerFollowCursor(window, eman);
+    ProcessRealInput(eman);
     ProcessEntityMovement(window, eman);
     ProcessCollisions(eman);
+    ProcessAnimations();
 
     // process drawing
     DrawEman(window, eman);
@@ -53,6 +56,8 @@ int main() {
     if (log_frame) {
       for (auto& e : eman.entities) {
         if (e.shapeRec) fmt::print("{}\n", e.Log());
+        if (e.shapeSprite) fmt::print("{}\n", e.Log());
+        if (e.shapeCir) fmt::print("{}\n", e.Log());
         if (e.shapeLine) fmt::print("{}\n", e.Log());
       }
     }
