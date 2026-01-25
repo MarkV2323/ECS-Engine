@@ -20,7 +20,11 @@ const fs::path config = CWD / CONFIG_FILE;
 
 // Checks config file, creates one if missing
 inline void CheckConfig() {
-  if (fs::exists(config)) return;
+  if (fs::exists(config)) {
+    fmt::print(fg(INFO_COLOR), "{:>11} ", "Found config at: ");
+    fmt::print(fg(VAL_COLOR), "{}\n", config.string());
+    return;
+  }
   fmt::print(fg(INFO_COLOR), "{:>11} ", "CREATING CONFIG");
   fmt::print(fg(VAL_COLOR), "{}\n", config.string());
   std::ofstream out(config);
@@ -28,7 +32,11 @@ inline void CheckConfig() {
 
 inline void UnmarshalEntity(EntityMan& eman, std::string line) {
   Entity e{};
-  if (e.Unmarshal(line)) eman.AddEntity(e);
+  if (e.Unmarshal(line)) {
+    eman.AddEntity(e);
+    fmt::print(fg(INFO_COLOR), "{:>11}\n", "Adding the following entity");
+    fmt::print("{}\n", e.Log());
+  }
 }
 
 inline void ProcessUnmarshalEntityMan(EntityMan& eman) {

@@ -15,6 +15,7 @@ constexpr sf::Keyboard::Key PAUSE_KEY = sf::Keyboard::Key::P;
 constexpr sf::Keyboard::Key INC_KEY = sf::Keyboard::Key::I;
 constexpr sf::Keyboard::Key SAVE_KEY = sf::Keyboard::Key::S;
 constexpr sf::Keyboard::Key LOG_KEY = sf::Keyboard::Key::L;
+constexpr sf::Keyboard::Key EMAN_KEY = sf::Keyboard::Key::E;
 constexpr sf::Keyboard::Key UP_KEY = sf::Keyboard::Key::Up;
 constexpr sf::Keyboard::Key DOWN_KEY = sf::Keyboard::Key::Down;
 constexpr sf::Keyboard::Key LEFT_KEY = sf::Keyboard::Key::Left;
@@ -82,6 +83,10 @@ inline void ProcessInput(sf::RenderWindow& win, EntityMan& eman,
     case (LOG_KEY):
       fmt::print(fg(INFO_COLOR), "{}\n", "Logging toggled!");
       log_frame = !log_frame;
+      break;
+    case (EMAN_KEY):
+      fmt::print(fg(INFO_COLOR), "{}\n", "Entity Manager debug:");
+      eman.PrintEntities();
       break;
     default:
       break;

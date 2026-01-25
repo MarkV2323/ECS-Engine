@@ -82,19 +82,13 @@ class Entity {
   std::optional<bool> player = std::nullopt;
 
   // Animation related vars
-  bool animations {false};
-  size_t gameFrame {0};
-  size_t frameCount {0};
-  size_t animFrame {0};
-  enum lastDirection {
-    up,
-    down,
-    left,
-    right,
-    none
-  };
-  lastDirection ld {none};
-  
+  bool animations{false};
+  size_t gameFrame{0};
+  size_t frameCount{0};
+  size_t animFrame{0};
+  enum lastDirection { up, down, left, right, none };
+  lastDirection ld{none};
+
   // These are stored window "global" positions for the rectangle.
   sf::Vector2f recCenter{0, 0};
   sf::Vector2f recSize{0, 0};
@@ -414,9 +408,9 @@ class Entity {
       ss >> token;
       if (token == "true") player = true;
       if (token == "false") player = false;
-      
+
       // build textureName
-      std::string textureName {};
+      std::string textureName{};
       ss >> token;
       textureName = token;
 
@@ -425,7 +419,7 @@ class Entity {
       SetSprite(spriteShape);
       animations = true;
       speed = spd;
-      
+
       return true;
     }
 
@@ -445,8 +439,7 @@ class Entity {
       logString += " - ";
       logString += fmt::format(fg(INFO_COLOR), "{} : ", "topLeftPos");
       auto pPos = shapeSprite->getPosition();
-      logString +=
-          fmt::format(fg(VAL_COLOR), "{:<10}", PrintVector(pPos));
+      logString += fmt::format(fg(VAL_COLOR), "{:<10}", PrintVector(pPos));
       logString += " - ";
       logString += fmt::format(fg(INFO_COLOR), "{} : ", "Spd");
       logString += fmt::format(fg(VAL_COLOR), "{:<10}", PrintVector(*speed));
@@ -506,7 +499,11 @@ class EntityMan {
  public:
   std::vector<Entity> entities{};
   void AddEntity(Entity e) { entities.push_back(e); }
+  void PrintEntities() {
+    for (auto& e : entities) {
+      fmt::print("{}\n", e.Log());
+    }
+  }
 };
 
 }  // namespace ecs
-
