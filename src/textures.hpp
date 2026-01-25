@@ -9,19 +9,11 @@
 namespace ecs {
 class TextureMan {
  private:
-  // texture location
-  constexpr static std::string TEXTURE_PATH = "assests";
-
-  // Contains file path + name of our texture path
-  const std::filesystem::path textPath = CWD / TEXTURE_PATH;
-
   // global texture map, names -> texture
   std::map<std::string, sf::Texture> textureMap{};
 
  public:
-  TextureMan() {
-    LoadTextures();
-  }
+  TextureMan() { LoadTextures(); }
 
   // Retreive a texture from the map
   const sf::Texture& GetTexture(std::string t) { return textureMap[t]; }
